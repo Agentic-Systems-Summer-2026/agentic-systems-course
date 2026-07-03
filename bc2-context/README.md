@@ -7,8 +7,15 @@ note-taking, system-prompt altitude). Document what broke, what you changed,
 and evidence it's fixed.
 
 **Starter state.** `overload_task.py` stuffs 30 policy documents into one
-request when only 3 matter. Run it a few times and capture the failure —
-wrong citations, invented provisions, ignored instructions, or overflow.
+request when only 3 matter — including expired/rescinded look-alike policies
+with different numbers. Run it a few times and capture the failure — wrong
+citations (the AS-12/AS-27 traps), invented provisions, ignored
+instructions, or overflow. Strong models sometimes survive it; if yours
+does, reproduce the failure with a smaller model
+(`COURSE_MODEL="gemma4-small" python3 bc2-context/overload_task.py`) —
+which is itself the lesson: context robustness varies by model, and your
+fix must not depend on the model being heroic. Note the starter's token
+cost either way (~25k tokens per question!) — your fix should crush that.
 
 **Your fix** goes in `fixed_task.py` (you create it). Keep the starter intact
 as the "before" so the comparison is honest. Any strategy from the pre-read
