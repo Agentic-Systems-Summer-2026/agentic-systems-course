@@ -1,0 +1,32 @@
+# Build Challenge 2 — Context & Prompt Design (50 pts, due Fri Jul 17, 11:59 PM CT)
+
+**Objective.** Deliberately induce a context-window failure on a multi-step
+task (drift, forgotten instructions, or overflow), then fix it using
+techniques from the pre-read (compaction, just-in-time retrieval,
+note-taking, system-prompt altitude). Document what broke, what you changed,
+and evidence it's fixed.
+
+**Starter state.** `overload_task.py` stuffs 30 policy documents into one
+request when only 3 matter. Run it a few times and capture the failure —
+wrong citations, invented provisions, ignored instructions, or overflow.
+
+**Your fix** goes in `fixed_task.py` (you create it). Keep the starter intact
+as the "before" so the comparison is honest. Any strategy from the pre-read
+is fair game; retrieval can be keyword-based (the Sandbox has no embedding
+model — that constraint is real and worth noting in your write-up).
+
+**Prompts are software artifacts.** The analyst prompt lives in
+`prompts/bc2-analyst.txt`. Every change you make to it (and any prompt you
+add) gets a `PROMPTS.md` entry; your write-up must cite **at least two**
+entries as evidence of the fix.
+
+**Acceptance check.**
+- A documented failure from the starter (output + why it failed).
+- `python3 bc2-context/fixed_task.py` answers with exactly AS-7 / AS-18 /
+  AS-24 and correct details, at a fraction of the starter's token cost
+  (compare `STATS`).
+- ≥2 cited `PROMPTS.md` entries.
+
+**Rubric (50 pts).** Failure reproduced & explained (15) · fix works and is
+cheaper, with measured before/after (20) · prompt changelog discipline (10) ·
+Build Journal entry (5).
