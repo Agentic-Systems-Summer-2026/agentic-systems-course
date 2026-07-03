@@ -35,6 +35,21 @@ Each dated Canvas module tells you what to build. Build it in the matching
 folder, commit as you go (small commits with real messages — your history is
 part of the evidence), push, and add a `JOURNAL.md` entry. Due 11:59 PM CT.
 
+### Getting instructor updates
+
+Your repo is a **snapshot** of the template at the moment you created it —
+instructor fixes pushed to the template afterward do *not* arrive
+automatically, and plain `git pull` only syncs **your own** repo. If an
+update is announced, run (first time):
+
+```bash
+git remote add upstream https://github.com/Agentic-Systems-Summer-2026/agentic-systems-course
+git pull upstream main --allow-unrelated-histories
+```
+
+and after that just `git pull upstream main`. Grading and assignment
+details never require this — they live in Canvas, not in the repo.
+
 **Keys stay out of git.** Your Sandbox key lives in Codespaces secrets and
 (from BC4 on) a GitHub Actions repository secret. `.env` files are
 gitignored. If a key ever lands in a commit: rotate it, then fix history.
