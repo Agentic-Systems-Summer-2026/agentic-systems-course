@@ -47,6 +47,18 @@ secret it passes with a notice, so early pushes stay green. From BC4 onward
 a red X means your change regressed the evals — read the failure, fix or
 justify, never just raise the threshold.
 
+## Toolbelt (pre-installed)
+
+Beyond Python/Node/git, setup installs: `cloudflared` (share a running demo:
+`cloudflared tunnel --url http://localhost:5000`), `jq` (JSON wrangling),
+`gh` (check your CI eval runs: `gh run list`), `sqlite3` (retrieval/memory
+labs, agent state), `tmux` (keep long-running agents alive — BC3),
+`asciinema` (terminal recordings — an official demo-evidence format:
+`asciinema rec demo.cast`, then commit the file), `ripgrep`, `httpie`,
+`tree`, `htop`, `entr` (auto-rerun on change:
+`ls bc4-evals/*.py | entr python3 bc4-evals/harness.py`), and `flask`
+(serve a capstone demo UI behind your tunnel).
+
 ## Model notes
 
 Default model: `Qwen3 Coder 30B` (set in the Codespace config). Route

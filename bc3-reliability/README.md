@@ -22,9 +22,11 @@ the categories; find them in the code).
    bad URL for a few items, or corrupt a model reply) and show the harness
    handles it and the report stays valid.
 
-**Acceptance check.** Both recovery demos captured in the write-up (trace or
-screenshot), report never left corrupt/half-written, and re-running after
-success is idempotent.
+**Acceptance check.** Both recovery demos captured in the write-up — an
+**asciinema recording is the preferred evidence** (`asciinema rec
+bc3-recovery.cast`, commit the .cast file; trace excerpts or screenshots
+also accepted) — report never left corrupt/half-written, and re-running
+after success is idempotent.
 
 **Rubric (50 pts).** Diagnosis completeness (15) · fixes: retries/timeouts/
 validation/fallback (15) · checkpoint + rollback with demonstrated recovery

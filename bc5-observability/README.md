@@ -24,7 +24,9 @@ observability. It usually works; when it doesn't, you can't tell where.
 
 **Acceptance check.** A trace file a stranger could follow; an approval gate
 that actually blocks; a cost reconciliation (your numbers vs. the gateway's);
-and an incident write-up citing specific trace lines.
+and an incident write-up citing specific trace lines. An asciinema recording
+of the live diagnosis session (`asciinema rec bc5-incident.cast`) is welcome
+supporting evidence.
 
 **Rubric (50 pts).** Trace quality/completeness (15) · working HITL gate,
 logged (10) · cost reconciliation (10) · incident diagnosis from trace (10) ·
