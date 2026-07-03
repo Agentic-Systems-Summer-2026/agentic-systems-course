@@ -39,6 +39,17 @@ RELEVANT = {
         "needs a data-owner sign-off recorded in the request ticket.",
 }
 
+# Traps: superseded/expired versions with DIFFERENT numbers, buried in the
+# haystack. A context-overloaded model tends to cite one of these instead.
+TRAPS = {
+    12: "POLICY AS-12 (Automation Pilot Program — EXPIRED 2024, retained for "
+        "records only): pilot agents were capped at 12 hours unattended "
+        "runtime with lab-manager approval; logs kept 30 days.",
+    27: "POLICY AS-27 (Legacy Unattended Automation — RESCINDED, superseded "
+        "by AS-7): unattended runtime capped at 24 hours; verbal supervisor "
+        "approval sufficient; no on-call contact required.",
+}
+
 random.seed(4243)  # same haystack for everyone
 FILLER_TOPICS = ["visitor parking", "printer quotas", "meeting-room booking",
                  "coffee fund", "poster printing", "bicycle storage",
@@ -51,6 +62,8 @@ def make_docs():
     for i in range(1, 31):
         if i in RELEVANT:
             body = RELEVANT[i]
+        elif i in TRAPS:
+            body = TRAPS[i]
         else:
             t = random.choice(FILLER_TOPICS)
             body = (f"POLICY AS-{i} ({t.title()}): " +
@@ -73,9 +86,11 @@ def main():
         max_tokens=500)
     print("\n" + answer)
     print(f"\nSTATS: {STATS}")
-    print("\nGround truth: AS-7 (approval + 72h max), AS-18 (append-only logs, "
-          "90-day retention), AS-24 (read-only creds / data-owner sign-off). "
-          "Did it cite exactly these, with correct details?")
+    print("\nGround truth: AS-7 (written approval + on-call contact, 72h max), "
+          "AS-18 (append-only logs, 90-day retention), AS-24 (read-only creds / "
+          "data-owner sign-off). Did it cite exactly these, with correct "
+          "details — or did it fall for the expired AS-12 (12h) or rescinded "
+          "AS-27 (24h, verbal approval)?")
 
 
 if __name__ == "__main__":
