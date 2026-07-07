@@ -1,4 +1,4 @@
-Standup notes, July 6. Varun says the LiteLLM keys for the new cohort are ready.
+Standup notes, July 6. Varun says the OpenRouter onboarding guide for the new cohort is ready.
 Tyler is testing the Codespace starter on a fresh account. Capstone demo idea:
-a triage agent for the helpdesk queue. Blocker: still no embedding model on the
-Sandbox, so retrieval work is keyword-only for now.
+a triage agent for the helpdesk queue. Blocker: still no embedding endpoint on
+OpenRouter, so retrieval work is keyword-only for now.

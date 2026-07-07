@@ -19,7 +19,7 @@ cost either way (~25k tokens per question!) — your fix should crush that.
 
 **Your fix** goes in `fixed_task.py` (you create it). Keep the starter intact
 as the "before" so the comparison is honest. Any strategy from the pre-read
-is fair game; retrieval can be keyword-based (the Sandbox has no embedding
+is fair game; retrieval can be keyword-based (OpenRouter has no embedding
 model — that constraint is real and worth noting in your write-up).
 
 **Prompts are software artifacts.** The analyst prompt lives in

@@ -10,7 +10,11 @@
   // persisted client token (from ~/.openclaw/.env) lets the TUI authenticate.
   gateway: { mode: "local", bind: "loopback", auth: { mode: "token", token: "${OPENCLAW_GATEWAY_TOKEN}" } },
 
-  // Route every model call through the OU LiteLLM gateway (OpenAI-compatible API).
+  // Two endpoints are available; the default model (agents.defaults.model,
+  // rendered below) points at whichever one preflight validated — OU LiteLLM
+  // Sandbox first, else OpenRouter. OpenRouter is a native OpenClaw provider
+  // (picks up OPENROUTER_API_KEY from ~/.openclaw/.env; nothing to declare
+  // here). The block below declares the OU LiteLLM Sandbox (OpenAI-compatible).
   models: {
     providers: {
       litellm: {

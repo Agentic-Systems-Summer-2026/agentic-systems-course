@@ -16,7 +16,7 @@ Template per entry:
 ---
 
 ## Day 1 — Lab 0 (example format; replace with your own)
-- **What I built:** connected my Codespace to the OU Sandbox and ran the end-to-end demo.
+- **What I built:** connected my Codespace to OpenRouter and ran the end-to-end demo.
 - **What failed:** first run rejected my key — I had pasted it with a trailing space.
 - **What I changed:** re-ran `bash scripts/set-key.sh` and re-ran the gateway task.
 - **Where AI helped, and how I verified its output:** asked the TUI to explain the agent loop; cross-checked its claims against the gateway log lines.

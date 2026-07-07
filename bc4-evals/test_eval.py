@@ -1,6 +1,6 @@
 """CI regression gate (runs on every push via .github/workflows/eval.yml).
 
-Small LIVE sweep against the OU Sandbox: first EVAL_LIVE_N cases (default 5),
+Small LIVE sweep against OpenRouter: first EVAL_LIVE_N cases (default 5),
 temperature 0, response caching on. Keep it capped — a push should cost
 pennies. The gate fails the build when the pass rate drops below
 harness.PASS_THRESHOLD: that's the point. When you improve your system,
@@ -15,8 +15,8 @@ import pytest
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
-if not os.environ.get("LITELLM_API_KEY"):
-    pytest.skip("LITELLM_API_KEY not set — eval gate needs the repository secret "
+if not os.environ.get("OPENROUTER_API_KEY"):
+    pytest.skip("OPENROUTER_API_KEY not set — eval gate needs the repository secret "
                 "(Settings → Secrets and variables → Actions).",
                 allow_module_level=True)
 

@@ -9,7 +9,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_env.sh" 2>/dev/null || tr
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 echo "════════════════════════════════════════════════════"
-echo "  OpenClaw Gateway  (OU LiteLLM)"
+echo "  OpenClaw Gateway  (OU LiteLLM first, OpenRouter fallback)"
 echo "════════════════════════════════════════════════════"
 
 # If a gateway is already up or being started in the background (by the
@@ -49,12 +49,23 @@ fi
 
 # Ensure a startable config exists. Render defaults if missing, and always make
 # sure the container-critical keys are set. These are surgical — they do NOT
-# touch any model selection you made with select-model.sh.
+# touch any model selection you made with select-model.sh, UNLESS that
+# selection points at a provider whose key just failed pre-flight (then we
+# re-render onto the provider that actually works).
+PREF_PROVIDER="$(cat "${HOME}/.openclaw/.provider" 2>/dev/null || true)"
+OK_PROVIDERS="$(cat "${HOME}/.openclaw/.providers_ok" 2>/dev/null || true)"
 if [[ ! -f "${HOME}/.openclaw/openclaw.json" ]]; then
   echo "No config found — rendering defaults…"
   bash "${REPO_DIR}/scripts/configure.sh" || true
+else
+  cur_provider="$(grep -oE 'primary: "(litellm|openrouter)/' "${HOME}/.openclaw/openclaw.json" 2>/dev/null | grep -oE 'litellm|openrouter' | head -1 || true)"
+  if [[ -n "${cur_provider}" && -n "${PREF_PROVIDER}" && "${cur_provider}" != "${PREF_PROVIDER}" ]] \
+     && ! grep -qw "${cur_provider}" <<< "${OK_PROVIDERS}"; then
+    echo "Current model uses ${cur_provider}, but that key didn't validate — re-pointing at ${PREF_PROVIDER}…"
+    OPENCLAW_PROVIDER="${PREF_PROVIDER}" bash "${REPO_DIR}/scripts/configure.sh" || true
+  fi
 fi
-# Load persisted secrets (LiteLLM key + gateway token) into this process.
+# Load persisted secrets (OpenRouter key + gateway token) into this process.
 mkdir -p "${HOME}/.openclaw"
 if [[ -f "${HOME}/.openclaw/.env" ]]; then set -a; . "${HOME}/.openclaw/.env"; set +a; fi
 

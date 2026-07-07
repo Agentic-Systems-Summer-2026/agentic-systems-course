@@ -3,7 +3,7 @@
 **Objective.** Build an evaluation harness for your capstone slice:
 assertions, an LLM-as-judge calibrated against a handful of your own human
 labels, and an error-analysis pass. Run a **scoped sweep** (dozens of cases,
-with response caching) against the OU AI Sandbox and report metrics with
+with response caching) against OpenRouter and report metrics with
 thresholds — then wire the harness into CI as a **regression gate**.
 
 **Starter state.** `harness.py` (three-layer harness, runnable now against a
@@ -19,7 +19,7 @@ must_contain / must_not_contain / max_chars / judge_criteria), and
    criteria until you trust it.
 3. Do the error-analysis pass on `last_run.json` — your write-up's most
    valuable section is what the *failures* taught you.
-4. **CI regression gate:** add your `LITELLM_API_KEY` as a GitHub Actions
+4. **CI regression gate:** add your `OPENROUTER_API_KEY` as a GitHub Actions
    *repository secret* (Settings → Secrets and variables → Actions). The
    included workflow then runs a small live sweep (~5 cases, temp 0, cached,
    capped so a push costs pennies) on every push. Never commit the key — key
