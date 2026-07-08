@@ -45,10 +45,20 @@ LAST_NOTE=0
 while :; do
   show_gateway_progress
   if [[ "$(cat "${STATUS}" 2>/dev/null)" == "fail" ]]; then
+    reason="$(cat "${HOME}/.openclaw/.preflight_reason" 2>/dev/null || true)"
+    if [[ "${reason}" == "nokey" || "${reason}" == "invalid" ]]; then
+      # The Gateway terminal is prompting for a key — keep waiting, don't bail.
+      if (( SECONDS - LAST_NOTE >= 15 )); then
+        echo "🔑  The 'OpenClaw: Gateway' terminal is asking for your API key — enter it there; I'll wait."
+        LAST_NOTE=${SECONDS}
+      fi
+      sleep 1
+      continue
+    fi
     echo
     echo "⛔  Gateway did not start (key pre-flight failed)."
     echo "    Fix your key:  bash scripts/set-key.sh"
-    echo "    Then rebuild the Codespace, or re-run the 'OpenClaw: Gateway' task."
+    echo "    Then re-run the 'OpenClaw: Gateway' task (Terminal → Run Task)."
     exit 1
   fi
   if curl -fsS -m 2 -o /dev/null "${HEALTH}" 2>/dev/null \

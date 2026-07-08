@@ -28,10 +28,30 @@ if [[ "${OPENCLAW_GATEWAY_FOREGROUND:-}" != "1" ]] && {
   exec tail -n 40 -F "${HOME}/.openclaw/gateway.log"
 fi
 
-if ! bash "${REPO_DIR}/scripts/preflight.sh"; then
+# Pre-flight, with an interactive first-run rescue: if no (working) key is
+# found and we're in a real terminal — the normal case when the "OpenClaw:
+# Gateway" task opens on folder open — prompt for a key right here instead of
+# aborting. Students paste their OU Sandbox key (sk-) or OpenRouter key
+# (sk-or-) and startup continues; nothing to rebuild.
+_pf_tries=0
+until bash "${REPO_DIR}/scripts/preflight.sh"; do
+  reason="$(cat "${HOME}/.openclaw/.preflight_reason" 2>/dev/null || echo unknown)"
+  _pf_tries=$((_pf_tries+1))
+  if [[ "${OPENCLAW_GATEWAY_FOREGROUND:-}" != "1" ]] && [[ -t 0 || -t 1 ]] \
+     && [[ "${reason}" == "nokey" || "${reason}" == "invalid" ]] && (( _pf_tries <= 3 )); then
+    echo
+    echo "🔑  Let's fix that right now (attempt ${_pf_tries}/3) — paste ONE key:"
+    echo "    • OU LiteLLM Sandbox key (starts with sk-) — first choice, from your Sandbox invitation"
+    echo "    • OpenRouter key (starts with sk-or-) — also works, from openrouter.ai → Settings → Keys"
+    if ! bash "${REPO_DIR}/scripts/set-key.sh"; then
+      echo "⛔  No key entered — gateway not started. Run 'bash scripts/set-key.sh' any time, then re-run this task."
+      exit 1
+    fi
+    continue
+  fi
   echo "⛔  Gateway aborted — key pre-flight failed (see message above)."
   exit 1
-fi
+done
 
 if ! command -v openclaw >/dev/null 2>&1; then
   echo "⚙️  openclaw not found — installing it now (one-time, ~1-2 min)…"

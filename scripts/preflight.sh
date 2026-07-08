@@ -78,14 +78,17 @@ fi
 # ---- verdict ----------------------------------------------------------------
 if [[ -z "${VALID}" ]]; then
   if [[ -z "${LL_KEY}" && -z "${OR_KEY}" ]]; then
+    echo "nokey" > "${HOME}/.openclaw/.preflight_reason"
     fail "No endpoint key set. Provide ONE of:
    • LITELLM_API_KEY  — your OU LiteLLM Sandbox key (starts with sk-), or
    • OPENROUTER_API_KEY — your own OpenRouter key (sk-or-, from openrouter.ai → Settings → Keys).
    Set it as a Codespaces secret and reopen, or run: bash scripts/set-key.sh"
   else
+    echo "invalid" > "${HOME}/.openclaw/.preflight_reason"
     fail "No working endpoint key. See the warnings above, then fix with: bash scripts/set-key.sh"
   fi
 fi
+rm -f "${HOME}/.openclaw/.preflight_reason"
 
 PREFERRED="${VALID%% *}"   # litellm wins when both validated (listed first)
 echo "${PREFERRED}" > "${PROVIDER_FILE}"
