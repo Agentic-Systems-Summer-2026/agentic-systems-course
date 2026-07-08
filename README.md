@@ -1,8 +1,8 @@
 # Agentic Systems Course Repo — SDI 4243/5243 (OU)
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Agentic-Systems-Summer-2026/agentic-systems-course?quickstart=1)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Agentic-Systems-Summer-2026/agentic-systems-course)
 
-> **⚠️ Already inside a Codespace?** Then there's no need to click this button again — you're already where it takes you. Clicking it again would just open (or create) another Codespace. (In your own repo, setup re-points this badge at your copy automatically.)
+> **⚠️ Two cautions.** (1) This button opens the Codespace **creation page with options** — enter your API key(s) in the "Recommended secrets" fields there *before* clicking Create. (2) In a brand-new student repo this badge still points at the course template until your first Codespace setup re-points it — so for your **first** launch, use the steps below instead of the badge.
 
 Your personal course repository for the Summer 2026 July Block. Everything
 you build this course lives here: five Build Challenges, your prompts, your
@@ -12,13 +12,16 @@ Build Journal, and a CI eval gate. By August 7 this repo *is* your portfolio.
 
 1. Click **Use this template → Create a new repository** (your account;
    private is fine). Do **not** fork.
-2. On your new repo: **Code → Codespaces → Create codespace on main.**
-   You'll be prompted for two secrets — set whichever you have (either works;
-   if you set both, LiteLLM is used first):
+2. On your new repo: **Code → Codespaces → the "···" menu → New with
+   options…** (skip the plain "Create codespace" button). The creation page
+   shows two **Recommended secrets** — fill in whichever you have (either
+   works; if you set both, LiteLLM is used first):
    `LITELLM_API_KEY` — your OU LiteLLM Sandbox key (starts with `sk-`),
-   issued by the course; or `OPENROUTER_API_KEY` — your OWN OpenRouter key
-   (starts with `sk-or-`; create it at openrouter.ai — expect at most ~$10
-   of usage for the term).
+   from your Sandbox invitation; or `OPENROUTER_API_KEY` — your OWN
+   OpenRouter key (starts with `sk-or-`; create it at openrouter.ai —
+   expect at most ~$10 of usage for the term). Then click **Create
+   codespace**. (Forgot a key? No problem — the Gateway terminal will ask
+   you for one on first start.)
 3. Wait for setup to finish (watch the numbered steps). The OpenClaw gateway
    auto-starts in the background and two terminals open: **Gateway** (live
    log) and **TUI** (chat with your agent). Full details on how this works:
