@@ -27,6 +27,12 @@ Build Journal, and a CI eval gate. By August 7 this repo *is* your portfolio.
    log) and **TUI** (chat with your agent). Full details on how this works:
    [openclaw-codespace-starter](https://github.com/jhassell/openclaw-codespace-starter)
    — this repo includes the same machinery.
+   **No terminals appeared?** That's a VS Code security gate, not a broken
+   setup: press `Cmd/Ctrl+Shift+P` → **Tasks: Run Task** → **OpenClaw:
+   Gateway**, then again for **OpenClaw: TUI** (or just run
+   `bash scripts/start-gateway.sh` in a terminal — it will prompt for your
+   key if needed). If VS Code shows an "automatic tasks" notification
+   (bell icon, bottom right), allow it so future opens start by themselves.
 4. Smoke test: `python3 bc1-tools/agent.py "what do my notes say about the demo?"`
 
 ## Layout
