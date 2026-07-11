@@ -51,14 +51,32 @@ def run_tool(act: dict) -> str:
     return "ERROR: unknown tool " + repr(t)
 
 
+def parse_action(out: str) -> dict:
+    """Return the first valid JSON object with a "tool" key found in `out`.
+
+    Models sometimes emit two JSON objects, or an object followed by prose.
+    A greedy first-{-to-last-} regex would swallow all of it and crash
+    json.loads with "Extra data" — so decode incrementally instead.
+    (Foreshadowing BC3: never trust model output to be well-formed.)
+    """
+    dec = json.JSONDecoder()
+    for m in re.finditer(r"\{", out):
+        try:
+            obj, _ = dec.raw_decode(out, m.start())
+        except json.JSONDecodeError:
+            continue
+        if isinstance(obj, dict) and "tool" in obj:
+            return obj
+    return {}
+
+
 def main():
     task = " ".join(sys.argv[1:]) or "Summarize what my notes say about the capstone demo."
     msgs = [{"role": "system", "content": load_prompt("bc1-agent-system.txt")},
             {"role": "user", "content": TOOLS_SPEC + "\nTASK: " + task}]
     for step in range(1, MAX_STEPS + 1):
         out = chat(msgs)
-        m = re.search(r"\{.*\}", out, re.S)
-        act = json.loads(m.group(0)) if m else {}
+        act = parse_action(out)
         print(f"── step {step}: request≈{sum(len(x['content']) for x in msgs)} chars"
               f" → chose {act.get('tool')} {({k: v for k, v in act.items() if k not in ('tool', 'answer')})}")
         if act.get("tool") == "finish":
