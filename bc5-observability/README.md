@@ -9,7 +9,11 @@ changed.
 **Starter state.** `quiet_agent.py` — a three-step pipeline with zero
 observability. It usually works; when it doesn't, you can't tell where.
 
-**Your job.**
+**Your job.** (Division of labor: YOU design the trace schema — what would a
+stranger need to reconstruct what happened? — and the approval policy; your
+AI writes the logging code to your schema. The incident diagnosis in step 4
+must be entirely yours: diagnosing from a trace is the human oversight skill
+this course exists to teach. Include a delegation log in the write-up.)
 1. **Trace:** structured JSONL logging for every step — timestamp, step name,
    model, prompt/response sizes, tokens (from `common.llm.STATS` or response
    usage), latency, and the decision taken.

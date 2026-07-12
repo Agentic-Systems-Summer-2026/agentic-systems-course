@@ -11,12 +11,15 @@ plain model call), `cases.jsonl` (8 seed cases showing the patterns:
 must_contain / must_not_contain / max_chars / judge_criteria), and
 `test_eval.py` (the pytest wrapper CI runs).
 
-**Your job.**
+**Your job.** (Wiring `target()` to your system is a fine delegation task
+for your AI. Everything else in this BC is deliberately human work: the
+cases, the labels, and the error analysis are YOUR judgment — an eval built
+by the same kind of model it evaluates, unchecked, is circular.)
 1. Point `target()` at YOUR system and grow `cases.jsonl` to dozens of cases
    that cover its real failure modes (including at least one refusal case
    and one formatting case).
-2. Calibrate the judge: hand-label ~10 outputs, report agreement, adjust
-   criteria until you trust it.
+2. Calibrate the judge: hand-label ~10 outputs **yourself**, report
+   agreement, adjust criteria until you trust it.
 3. Do the error-analysis pass on `last_run.json` — your write-up's most
    valuable section is what the *failures* taught you.
 4. **CI regression gate:** add your `OPENROUTER_API_KEY` as a GitHub Actions

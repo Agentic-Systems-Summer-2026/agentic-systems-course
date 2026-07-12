@@ -7,7 +7,8 @@
 #
 #   bash scripts/sync-template.sh                     # list files that differ
 #   bash scripts/sync-template.sh bc1-tools/agent.py  # sync one file + commit
-#   bash scripts/sync-template.sh --push <paths...>   # ...and push to GitHub
+#   bash scripts/sync-template.sh --all               # sync ALL changed files
+#   bash scripts/sync-template.sh --push [--all|<paths...>]   # ...and push
 #
 # Safety: it refuses to run with uncommitted changes, warns before touching
 # any file you have committed work to, and commits the sync — so your own
@@ -17,16 +18,24 @@ set -euo pipefail
 TEMPLATE_URL="https://github.com/Agentic-Systems-Summer-2026/agentic-systems-course.git"
 cd "$(git rev-parse --show-toplevel)"
 
-PUSH=0; PATHS=()
+PUSH=0; ALL=0; PATHS=()
 for a in "$@"; do
   case "$a" in
     --push) PUSH=1 ;;
+    --all)  ALL=1 ;;
     *) PATHS+=("$a") ;;
   esac
 done
 
 git remote get-url template >/dev/null 2>&1 || git remote add template "$TEMPLATE_URL"
 git fetch --quiet template main
+
+if [ "$ALL" -eq 1 ]; then
+  while IFS= read -r f; do PATHS+=("$f"); done \
+    < <(git diff --name-only --diff-filter=MA HEAD template/main)
+  [ ${#PATHS[@]} -eq 0 ] && { echo "Already in sync with the template."; exit 0; }
+  echo "Syncing ${#PATHS[@]} file(s) from the template..."
+fi
 
 if [ ${#PATHS[@]} -eq 0 ]; then
   echo "Template files that changed since your copy (M=modified, A=new):"
@@ -63,7 +72,11 @@ if git diff --cached --quiet; then
   exit 0
 fi
 
-git commit -m "sync from course template: ${PATHS[*]}"
+if [ "$ALL" -eq 1 ]; then
+  git commit -m "sync from course template (all changed files)"
+else
+  git commit -m "sync from course template: ${PATHS[*]}"
+fi
 if [ "$PUSH" -eq 1 ]; then
   git push
   echo "Pushed. Your GitHub repo is up to date."
