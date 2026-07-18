@@ -44,6 +44,7 @@ Build Journal, and a CI eval gate. By August 7 this repo *is* your portfolio.
 | Path | What it is |
 |---|---|
 | `bc1-tools/` … `bc5-observability/` | One folder per Build Challenge: a runnable starter + `README.md` with the spec, acceptance check, and rubric |
+| `shipday/` | **Ship Day**: research → store → show with Tavily + Supabase + Netlify — spec, `check.py`, and rubric in its `README.md` |
 | `common/llm.py` | Shared OpenRouter client (stdlib): `chat()`, `STATS` (cost tracking), `cache=True`, `load_prompt()` |
 | `prompts/` + `PROMPTS.md` | Prompts as files + the required changelog. Prompts are software artifacts. |
 | `JOURNAL.md` | Your Build Journal (graded, cumulative, also your AI-use disclosure record) |
