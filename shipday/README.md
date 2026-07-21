@@ -8,7 +8,9 @@ reference (`.env.example`).
 you find in a **plain local file** (JSON or SQLite — your agent's choice;
 note which and why for your delegation log) → generate a static page into
 `public/` → **deploy `public/` to Netlify** with the Netlify CLI. Submit
-your live URL plus a 5-line delegation log on Canvas.
+your live URL plus a 6-line delegation log (which agent, a prompt
+that worked, one thing that broke and how you fixed it, and your
+storage choice and why) on Canvas.
 
 **Two accounts, three secrets.** No database service, no credit card.
 All three are **Codespaces secrets**, set at
