@@ -62,9 +62,10 @@ step "Step 5/7 — Course toolbelt (tunnels, JSON, recording, and friends)"
 #   ripgrep   - fast search through logs and traces
 #   httpie    - friendly HTTP client for poking APIs
 #   asciinema - terminal recordings, an official demo-evidence format
+#   netcat    - simulate hanging/unreachable endpoints in reliability tests (BC3)
 #   tree/htop/entr - orientation, resource view, auto-rerun on change
 sudo apt-get update -qq || true
-sudo apt-get install -y -qq jq sqlite3 tmux ripgrep httpie asciinema tree htop entr 2>/dev/null || true
+sudo apt-get install -y -qq jq sqlite3 tmux ripgrep httpie asciinema netcat-openbsd tree htop entr 2>/dev/null || true
 
 # cloudflared — quick tunnels to share your demo (Day 15, capstone):
 #   cloudflared tunnel --url http://localhost:5000
@@ -84,8 +85,8 @@ if ! command -v gh >/dev/null 2>&1; then
    && sudo apt-get update -qq && sudo apt-get install -y -qq gh) 2>/dev/null || true
 fi
 
-echo "toolbelt: $(for t in jq sqlite3 tmux rg http asciinema tree htop entr cloudflared gh; do command -v $t >/dev/null && printf '%s ' $t; done)"
-echo "missing:  $(for t in jq sqlite3 tmux rg http asciinema tree htop entr cloudflared gh; do command -v $t >/dev/null || printf '%s ' $t; done)"
+echo "toolbelt: $(for t in jq sqlite3 tmux rg http asciinema nc tree htop entr cloudflared gh; do command -v $t >/dev/null && printf '%s ' $t; done)"
+echo "missing:  $(for t in jq sqlite3 tmux rg http asciinema nc tree htop entr cloudflared gh; do command -v $t >/dev/null || printf '%s ' $t; done)"
 
 step "Step 6/7 — Model-picker keyboard shortcut (Ctrl/Cmd+Alt+M, best-effort)"
 # USER-scoped, so only written when no keybindings.json exists yet (never clobbers yours).
